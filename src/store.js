@@ -23,9 +23,9 @@ const configureStore = (history, initialState = {}) => {
   const persistedReducer = persistReducer(persistConfig, routedReducer);
 
   const sagaMiddleware = createSagaMiddleware();
-  const logger = process.env.NODE_ENV === 'development' ? createLogger({ collapsed: () => true }) : null;
+  const logger = createLogger({ collapsed: () => true });
   const routeMiddleware = routerMiddleware(history);
-  const middleware = [routeMiddleware, logger, sagaMiddleware];
+  const middleware = process.env.NODE_ENV === 'development' ? [routeMiddleware, logger, sagaMiddleware] : [routeMiddleware, sagaMiddleware];
 
   /* eslint-disable no-underscore-dangle */
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
